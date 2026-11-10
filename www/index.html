@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>হারু চাষী</title>
+<style>
+:root{--ink:#3b2410;--gold:#f6b93b;--cream:#fff6dc;--red:#d63031;--green:#2d8a4e}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0}
+html,body{height:100%;overflow:hidden;background:#87ceeb;font-family:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;color:var(--ink)}
+#scene{position:fixed;inset:0;overflow:hidden;background:linear-gradient(#8fd3f4 0%,#fde8b0 55%,#f9c46b 70%)}
+.abs{position:absolute}
+#sun{left:62%;top:7%;width:78px;height:78px;border-radius:50%;background:radial-gradient(#fff3b0,#ffc93c 60%,#ff9f1c);box-shadow:0 0 50px 20px #ffd16666;animation:pulse 5s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.cl{height:26px;width:80px;background:#fff;border-radius:30px;opacity:.9;animation:drift linear infinite}
+.cl:before,.cl:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cl:before{width:36px;height:36px;left:12px;top:-16px}.cl:after{width:28px;height:28px;left:40px;top:-10px}
+@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(110vw)}}
+.bd{font-size:18px;animation:fly linear infinite}
+@keyframes fly{from{transform:translate(-40px,0)}50%{transform:translate(50vw,-20px)}to{transform:translate(110vw,10px)}}
+#hills{left:-5%;right:-5%;top:34%;height:22%;background:#7fb069;border-radius:50% 50% 0 0}
+#field{left:0;right:0;top:44%;height:30%;background:repeating-linear-gradient(100deg,#e9b949 0 14px,#f2cd63 14px 28px);transform-origin:bottom;animation:sway 4s ease-in-out infinite alternate}
+@keyframes sway{to{filter:brightness(1.08)}}
+.tree{font-size:62px;bottom:auto;top:30%}
+#river{left:0;right:0;top:68%;height:14%;background:linear-gradient(#4aa3df,#2a7fba);overflow:hidden}
+.wave{position:absolute;left:-50%;width:200%;height:14px;background:repeating-radial-gradient(circle at 10px 14px,transparent 0 8px,#ffffff55 9px 10px);animation:wv 6s linear infinite}
+@keyframes wv{to{transform:translateX(25%)}}
+#boat{font-size:46px;top:63.5%;left:0;animation:boat 28s linear infinite}
+@keyframes boat{from{transform:translateX(-60px)}to{transform:translateX(110vw)}}
+#ground{left:0;right:0;top:80%;bottom:0;background:linear-gradient(#6aa84f,#3f7d32)}
+#farmer{bottom:4%;left:50%;width:min(52vw,230px);transform:translateX(-50%)}
+#farmer svg{width:100%;overflow:visible}
+.blink{animation:blink 4s infinite;transform-origin:center;transform-box:fill-box}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.brow{animation:brow 3s ease-in-out infinite}
+@keyframes brow{50%{transform:translateY(-4px)}}
+.arm{transform-origin:62px 150px;transform-box:view-box;animation:scr 2.4s ease-in-out infinite}
+@keyframes scr{0%,100%{transform:rotate(0)}40%{transform:rotate(-4deg)}60%{transform:rotate(3deg)}}
+.hop{animation:hop .6s 2}
+@keyframes hop{50%{transform:translateX(-50%) translateY(-40px)}}
+.sweat{animation:sw 2.5s infinite;opacity:0}
+@keyframes sw{50%{opacity:.9;transform:translateY(6px)}}
+
+/* thought cloud */
+#cloud{left:50%;top:6%;transform:translateX(-50%);width:min(92vw,400px);background:#fff;border-radius:40px;padding:16px 10px 14px;box-shadow:0 6px 0 #00000015;text-align:center;transition:.4s}
+#cloud:after{content:"";position:absolute;bottom:-22px;left:46%;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:12px 16px 0 -3px #fff}
+#cloud.hide{opacity:0;transform:translateX(-50%) scale(.6);pointer-events:none}
+#story{font-size:15px;margin:0 8px 10px;font-weight:600}
+#items{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.it{background:var(--cream);border:2px solid var(--gold);border-radius:18px;padding:8px 10px;min-width:92px;font:inherit;font-size:13px;font-weight:600;color:var(--ink);animation:fl 3s ease-in-out infinite}
+.it:nth-child(2n){animation-delay:.7s}.it:nth-child(3n){animation-delay:1.3s}
+.it b{display:block;font-size:30px;line-height:1.1}
+.it:active{transform:scale(1.15)}
+@keyframes fl{50%{transform:translateY(-5px)}}
+
+/* bubble */
+#bubble{left:50%;top:5%;transform:translateX(-50%) scale(.7);width:min(92vw,400px);background:#fff;border:3px solid var(--ink);border-radius:26px;padding:16px;opacity:0;pointer-events:none;transition:.3s;text-align:center;max-height:60%;overflow:auto}
+#bubble.on{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+#bubble h3{font-size:19px;margin-bottom:12px;line-height:1.4}
+.big{font-size:54px;display:block;animation:fl 2s infinite}
+.btn{display:block;width:100%;margin-top:9px;padding:13px;border:0;border-radius:16px;font:inherit;font-size:16px;font-weight:700;color:#fff;background:var(--green);box-shadow:0 4px 0 #1b5c33}
+.btn.o{background:#e17055;box-shadow:0 4px 0 #a8402a}.btn.y{background:var(--gold);color:var(--ink);box-shadow:0 4px 0 #b9851a}.btn.g{background:#636e72;box-shadow:0 4px 0 #3d4548}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.shake{animation:shk 1.6s infinite}
+@keyframes shk{0%,80%,100%{transform:none}84%{transform:translateX(-5px)}88%{transform:translateX(5px)}92%{transform:translateX(-4px)}96%{transform:translateX(3px)}}
+a.btn{text-decoration:none}
+.pulse{animation:pl 1.2s infinite}
+@keyframes pl{0%{box-shadow:0 4px 0 #1b5c33,0 0 0 0 #2d8a4eaa}100%{box-shadow:0 4px 0 #1b5c33,0 0 0 18px #2d8a4e00}}
+
+/* manager card */
+#card{left:50%;top:50%;width:min(90vw,360px);transform:translate(-50%,-50%) translateY(120vh);background:var(--cream);border:3px solid var(--ink);border-radius:28px;padding:18px;text-align:center;transition:transform .8s cubic-bezier(.2,1.3,.4,1);z-index:20;max-height:94%;overflow:auto}
+#card.on{transform:translate(-50%,-50%)}
+#card img{width:118px;height:118px;border-radius:50%;object-fit:cover;object-position:50% 30%;border:4px solid var(--gold);box-shadow:0 0 0 4px var(--ink)}
+.ver{display:inline-block;margin:8px 0;background:#0984e3;color:#fff;border-radius:20px;padding:3px 12px;font-size:13px;font-weight:700}
+.row{display:flex;justify-content:space-between;background:#fff;border-radius:12px;padding:7px 12px;margin:6px 0;font-size:14px}
+.cond{background:var(--red);color:#fff;border-radius:14px;padding:10px;margin:10px 0;font-weight:700;font-size:15px;animation:glow 1.4s infinite alternate}
+@keyframes glow{to{box-shadow:0 0 16px 3px #ff7675}}
+.conf{position:fixed;top:-20px;font-size:22px;z-index:30;animation:fall 3s linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+
+#mute{position:fixed;top:max(10px,env(safe-area-inset-top));right:10px;z-index:40;width:42px;height:42px;border-radius:50%;border:2px solid var(--ink);background:#fff;font-size:20px}
+#lang{position:fixed;inset:0;z-index:60;background:linear-gradient(#ffe29f,#ffa99f);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:6px;transition:opacity .5s}
+#lang h1{font-size:30px;text-align:center;line-height:1.3;margin-bottom:6px}
+#lang p{margin-bottom:14px;opacity:.8}
+#lang .btn{max-width:320px;font-size:20px;padding:16px;background:#fff;color:var(--ink);box-shadow:0 5px 0 var(--ink);border:2px solid var(--ink)}
+#lang.off{opacity:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
+
+#sun{width:104px;height:104px;top:6%}
+.tree{font-size:92px;top:27%}.bd{font-size:28px}
+#river{top:66%;height:16%}#boat{font-size:66px;top:61%}
+#farmer{width:min(54vw,215px);bottom:1%}
+#farmer svg{animation:br 3.2s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes br{50%{transform:scaleY(1.025)}}
+#bigtree{left:50%;transform:translateX(-50%);bottom:1%;width:min(118vw,470px);overflow:visible}
+#canopy{transform-box:view-box;transform-origin:200px 230px;animation:csw 5s ease-in-out infinite alternate}
+@keyframes csw{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
+.lf{position:absolute;font-size:22px;top:38%;opacity:0;animation:lf 7s linear infinite}
+@keyframes lf{0%{transform:translate(0,0) rotate(0);opacity:0}10%{opacity:1}50%{transform:translate(30px,150px) rotate(180deg)}100%{transform:translate(-20px,330px) rotate(400deg);opacity:0}}
+#bm{right:-50%;top:56%;transition:right 1.6s cubic-bezier(.3,1.2,.5,1);text-align:center;z-index:6}
+#bm.in{right:4%}
+#bm .h{font-size:50px;display:block;margin-bottom:-20px;animation:fl 2s infinite}
+#bm .b{font-size:92px;display:block;line-height:1;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(6px) rotate(3deg)}}
+#cloud{z-index:10}#bubble{z-index:11}
+#bigtree{width:min(100vw,400px)}
+</style></head><body>
+<div id="scene">
+ <div id="sun" class="abs"></div>
+ <div class="cl abs" style="top:10%;animation-duration:50s"></div>
+ <div class="cl abs" style="top:20%;animation-duration:70s;animation-delay:-30s;transform:scale(.7)"></div>
+ <div class="bd abs" style="top:14%;animation-duration:22s">🕊️</div>
+ <div class="bd abs" style="top:24%;animation-duration:30s;animation-delay:-12s">🐦</div>
+ <div id="hills" class="abs"></div>
+ <div class="tree abs" style="left:4%">🌴</div><div class="tree abs" style="right:3%">🎋</div><div class="tree abs" style="left:78%;top:34%;font-size:46px">🌴</div>
+ <div id="field" class="abs"></div>
+ <div id="river" class="abs"><div class="wave" style="top:6px"></div><div class="wave" style="top:30px;animation-duration:9s"></div><div class="wave" style="top:54px;animation-duration:7s"></div></div>
+ <div id="boat" class="abs">🛶</div>
+ <div id="ground" class="abs"></div>
+
+ <div id="cloud" class="abs"><div id="story"></div><div id="items"></div></div>
+ <div id="bubble" class="abs"></div>
+ <div id="card" class="abs"></div>
+
+ <svg id="bigtree" class="abs" viewBox="0 0 400 520"><ellipse cx="200" cy="514" rx="150" ry="10" fill="#0003"/>
+<path d="M166 520 Q176 360 184 220 L216 220 Q224 360 234 520Z" fill="#7a4a24"/>
+<path d="M190 300 Q150 270 118 246" stroke="#7a4a24" stroke-width="13" fill="none" stroke-linecap="round"/><path d="M210 290 Q250 260 284 238" stroke="#7a4a24" stroke-width="13" fill="none" stroke-linecap="round"/>
+<g id="canopy"><circle cx="105" cy="150" r="70" fill="#2f8f46"/><circle cx="295" cy="150" r="70" fill="#2f8f46"/><circle cx="200" cy="85" r="85" fill="#37a552"/><circle cx="150" cy="170" r="75" fill="#3bb35a"/><circle cx="252" cy="170" r="75" fill="#3bb35a"/><circle cx="200" cy="145" r="68" fill="#46c264"/></g></svg>
+ <div class="lf" style="left:30%">🍃</div><div class="lf" style="left:48%;animation-delay:2.3s">🍂</div><div class="lf" style="left:64%;animation-delay:4.6s">🍃</div>
+ <div class="bd abs" style="top:56%;animation-duration:26s;animation-delay:-8s;font-size:22px">🦋</div>
+ <div id="bm" class="abs"><span class="h">🧔</span><span class="b">🛶</span></div>
+ <div id="farmer" class="abs">
+ <svg viewBox="0 0 200 300">
+  <ellipse cx="100" cy="292" rx="60" ry="8" fill="#0003"/>
+  <!-- legs & dhoti (sitting) -->
+  <ellipse cx="68" cy="282" rx="17" ry="8" fill="#b9753a"/><ellipse cx="132" cy="282" rx="17" ry="8" fill="#b9753a"/>
+  <path d="M52 172 Q100 160 148 172 Q180 225 172 268 Q100 292 28 268 Q20 225 52 172Z" fill="#fffdf5" stroke="#d9d2b8" stroke-width="2"/>
+  <path d="M100 176 Q92 230 100 285 M60 200 Q100 215 140 200" stroke="#d9d2b8" stroke-width="2" fill="none"/>
+  <!-- torso -->
+  <path d="M62 112 Q100 100 138 112 L142 175 Q100 185 58 175Z" fill="#c8823f"/>
+  <path d="M60 112 L96 160" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".95"/>
+  <path d="M60 112 L96 160" stroke="#d63031" stroke-width="3" stroke-dasharray="6 6"/>
+  <!-- left arm (hip) -->
+  <path d="M62 118 Q36 150 58 176" fill="none" stroke="#c8823f" stroke-width="15" stroke-linecap="round"/>
+  <!-- head -->
+  <circle cx="100" cy="68" r="40" fill="#d4905a"/>
+  <ellipse cx="60" cy="72" rx="6" ry="9" fill="#c07d48"/><ellipse cx="140" cy="72" rx="6" ry="9" fill="#c07d48"/>
+  <!-- gamchha headband -->
+  <path d="M60 50 Q100 22 140 50 L140 60 Q100 38 60 60Z" fill="#d63031"/>
+  <path d="M60 54 Q100 30 140 54" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="5 5"/>
+  <path d="M138 52 Q158 56 156 78 L148 74 Q148 62 136 60Z" fill="#d63031"/>
+  <!-- face -->
+  <g class="brow"><path d="M70 55 Q80 47 92 54" stroke="#2b1a0c" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M108 54 Q120 47 130 55" stroke="#2b1a0c" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+  <g class="blink"><circle cx="82" cy="68" r="7" fill="#fff"/><circle cx="118" cy="68" r="7" fill="#fff"/><circle cx="84" cy="69" r="3.5" fill="#2b1a0c"/><circle cx="120" cy="69" r="3.5" fill="#2b1a0c"/></g>
+  <ellipse cx="100" cy="82" rx="8" ry="7" fill="#c07d48"/>
+  <path d="M70 92 Q85 84 100 90 Q115 84 130 92 Q115 104 100 96 Q85 104 70 92Z" fill="#2b1a0c"/>
+  <path d="M90 104 Q100 110 110 104" stroke="#7a3b1d" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <text class="sweat" x="136" y="52" font-size="16">💧</text>
+  <!-- right arm thinking (hand on head) -->
+  <g class="arm"><path d="M138 118 Q170 110 150 62" fill="none" stroke="#c8823f" stroke-width="15" stroke-linecap="round"/><circle cx="148" cy="52" r="10" fill="#d4905a"/></g>
+ </svg></div>
+</div>
+
+<button id="mute" aria-label="sound">🔊</button>
+
+<div id="lang"><h1>🌾 হারু চাষী 🌾<br><small style="font-size:16px">Haru Chashi · हारू किसान</small></h1><p>ভাষা বাছো · Choose language · भाषा चुनें</p>
+ <button class="btn" data-l="bn">বাংলা</button><button class="btn" data-l="en">English</button><button class="btn" data-l="hi">हिन्दी</button></div>
+
+<audio id="aR" src="assets/river.mp3" loop preload="auto"></audio>
+<audio id="aB" src="assets/bird.mp3" loop preload="auto"></audio>
+
+<script>
+const PHONE="+919832215127";            // <-- এখানে নম্বর বদলানো যাবে
+const T={
+bn:{story:"এক ছিল চাষী, নাম হারু। সে ঠিক করল এবার ব্যবসা শুরু করবে! কী দিয়ে শুরু করা যায়?",s1:"এক ছিল চাষী, নাম হারু। সারাদিন মাঠে খাটে, তবু সংসার চলে না…",s2:"একদিন নদীর ধারে গাছের তলায় বসে সে ভাবল: ধান বেচে আর কত! এবার একটা ব্যবসাই করি।",next:"এরপর কী হল? 👉",items:["আমুল বাটার","রসগোল্লা / মিষ্টি","চানাচুর","বিস্কুট","থামস আপ"],ask:"কী করবো ভাই?",mgr:"ম্যানেজার / স্টাফ খুঁজছি",money:"টাকার চিন্তা",moneyMsg:"অ্যাপ বানানেওয়ালা নিজেই খেতে পায় না, তোমায় কী পরামর্শ দেবে! 😭",trust:"কাকে বিশ্বাস করবো?",tr:"Trusted ✅",nt:"Not Trusted ❌",dk:"জানি না 🤷",ntMsg:"মাঝি হাঁক দিল: ওরে ও হারু! একা তুমি পারবে না! ব্যবসা একা সামলানো যায় না। একজন Trusted ম্যানেজার নাও।",boat:"🛶 মাঝি বলছে: আরে ভাই, আমি বলি, Trusted-ই নাও!",ok:"ঠিক আছে!",back:"← ফিরে যাও",name:"ফ্রি ম্যানেজার",ver:"✔ Verified Trusted",sal:"বেতন",sv:"₹০",exp:"অভিজ্ঞতা",ev:"১০০+ দোকান",cond:"একটাই শর্ত: স্টক অ্যাকাউন্ট চাওয়া যাবে না!",help:"এই মানুষের সাহায্য চাও?",call:"📞 হ্যাঁ, ফোন করো"},
+en:{story:"Once there was a farmer named Haru. He decided to start a business! What should he begin with?",s1:"Once there was a farmer named Haru. He worked the fields all day, yet money was always short…",s2:"One day, sitting under a tree by the river, he thought: Selling rice isn't enough! Let me start a business.",next:"What happened next? 👉",items:["Amul Butter","Rasgulla / Sweets","Chanachur","Biscuits","Thums Up"],ask:"What should I do, brother?",mgr:"Looking for a manager / staff",money:"Worried about money",moneyMsg:"The app creator can't even afford food, what advice will they give you! 😭",trust:"Whom should I trust?",tr:"Trusted ✅",nt:"Not Trusted ❌",dk:"Don't know 🤷",ntMsg:"The boatman calls: Hey Haru! You can't do it alone! A business can't be run solo. Take a Trusted manager.",boat:"🛶 The boatman says: Brother, just take the Trusted one!",ok:"Okay!",back:"← Go back",name:"Free Manager",ver:"✔ Verified Trusted",sal:"Salary",sv:"₹0",exp:"Experience",ev:"100+ shops",cond:"Only one condition: you cannot ask for any stock accounts!",help:"Do you want help from this person?",call:"📞 Yes, call now"},
+hi:{story:"एक था किसान, नाम हारू। उसने तय किया कि अब वह बिज़नेस शुरू करेगा! शुरुआत किससे करे?",s1:"एक था किसान, नाम हारू। दिन भर खेत में मेहनत करता, फिर भी घर नहीं चलता…",s2:"एक दिन नदी किनारे पेड़ के नीचे बैठकर उसने सोचा: धान बेचकर कितना चलेगा! अब कोई बिज़नेस करता हूँ।",next:"आगे क्या हुआ? 👉",items:["अमूल बटर","रसगुल्ला / मिठाई","चनाचूर","बिस्कुट","थम्स अप"],ask:"भाई, क्या करूँ?",mgr:"मैनेजर / स्टाफ ढूँढ रहा हूँ",money:"पैसों की चिंता",moneyMsg:"ऐप बनाने वाला खुद खाना नहीं खरीद सकता, तुम्हें क्या सलाह देगा! 😭",trust:"किस पर भरोसा करूँ?",tr:"Trusted ✅",nt:"Not Trusted ❌",dk:"पता नहीं 🤷",ntMsg:"माझी ने आवाज़ दी: अरे हारू! अकेले तुमसे नहीं होगा! बिज़नेस अकेले नहीं सँभलता। किसी Trusted मैनेजर को लो।",boat:"🛶 माझी कहता है: भाई, Trusted ही ले लो!",ok:"ठीक है!",back:"← वापस",name:"फ्री मैनेजर",ver:"✔ Verified Trusted",sal:"वेतन",sv:"₹०",exp:"अनुभव",ev:"१००+ दुकानें",cond:"सिर्फ़ एक शर्त: स्टॉक अकाउंट नहीं माँग सकते!",help:"क्या आप इस इंसान से मदद लेना चाहते हैं?",call:"📞 हाँ, फ़ोन करो"}};
+const E=["🧈","🍥","🥨","🍪","🥤"];
+const $=id=>document.getElementById(id);
+let L="bn",tm,R=$("aR"),B=$("aB"),muted=false;
+const ls=(k,v)=>{try{return v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}};
+
+function startSound(){R.volume=.5;B.volume=.3;R.play().catch(()=>{});B.play().catch(()=>{})}
+$("mute").onclick=()=>{muted=!muted;R.muted=B.muted=muted;$("mute").textContent=muted?"🔇":"🔊"};
+
+function type(el,txt,done){clearInterval(tm);el.textContent="";let i=0;const a=[...txt];tm=setInterval(()=>{el.textContent+=a[i++]||"";if(i>=a.length){clearInterval(tm);done&&done()}},45)}
+function bub(html){const b=$("bubble");b.innerHTML=html;b.classList.add("on");$("cloud").classList.add("hide")}
+function boatman(on){$("bm").classList.toggle("in",on)}
+function intro(i){const t=T[L];boatman(false);$("card").classList.remove("on");if(i>=2){home();return}
+ bub(`<span class="big">${i?"💭":"🌾"}</span><h3 id="st"></h3><button class="btn" id="nx">${t.next}</button>`);type($("st"),t[i?"s2":"s1"]);$("nx").onclick=()=>intro(i+1)}
+function home(){boatman(false);$("bubble").classList.remove("on");$("card").classList.remove("on");$("cloud").classList.remove("hide");const t=T[L];type($("story"),t.story);
+ $("items").innerHTML=t.items.map((n,i)=>`<button class="it" data-i="${i}"><b>${E[i]}</b>${n}</button>`).join("");
+ document.querySelectorAll(".it").forEach(b=>b.onclick=()=>ask(+b.dataset.i))}
+function ask(i){const t=T[L];bub(`<span class="big">${E[i]}</span><h3>${t.ask}</h3>
+ <button class="btn" id="m1">${t.mgr}</button><button class="btn o shake" id="m2">${t.money}</button><button class="btn g" id="m0">${t.back}</button>`);
+ $("m1").onclick=trust;$("m2").onclick=()=>moneyMsg(i);$("m0").onclick=home}
+function moneyMsg(i){const t=T[L];bub(`<span class="big">😭💸</span><h3 id="mm"></h3><button class="btn g" id="bk">${t.back}</button>`);type($("mm"),t.moneyMsg);$("bk").onclick=()=>ask(i)}
+function trust(){const t=T[L];boatman(false);bub(`<span class="big">🤔</span><h3>${t.trust}</h3>
+ <button class="btn" id="t1">${t.tr}</button><button class="btn o" id="t2">${t.nt}</button><button class="btn y" id="t3">${t.dk}</button>`);
+ $("t1").onclick=manager;
+ $("t2").onclick=()=>{boatman(true);bub(`<span class="big">🛶</span><h3>${t.ntMsg}</h3><button class="btn y" id="r">${t.ok}</button>`);$("r").onclick=trust};
+ $("t3").onclick=()=>{boatman(true);bub(`<span class="big">🛶</span><h3>${t.boat}</h3><button class="btn" id="r">${t.tr}</button>`);$("r").onclick=manager}}
+function confetti(){for(let i=0;i<30;i++){const c=document.createElement("div");c.className="conf";c.textContent=["🎉","✨","🌾","🎊"][i%4];c.style.left=Math.random()*100+"vw";c.style.animationDelay=Math.random()*1.2+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),4500)}}
+function manager(){const t=T[L];boatman(false);$("bubble").classList.remove("on");
+ $("card").innerHTML=`<img src="assets/manager.jpg" alt=""><h3 style="margin-top:8px">${t.name}</h3><div class="ver">${t.ver}</div>
+ <div class="row"><span>${t.sal}</span><b>${t.sv}</b></div><div class="row"><span>${t.exp}</span><b>${t.ev}</b></div>
+ <div class="cond">${t.cond}</div><h3 style="font-size:16px">${t.help}</h3>
+ <a class="btn pulse" href="tel:${PHONE}" id="call" style="margin-top:8px">${t.call}</a><button class="btn g" id="x">${t.back}</button>`;
+ $("card").classList.add("on");$("x").onclick=home;
+ const f=$("farmer");f.classList.remove("hop");void f.offsetWidth;f.classList.add("hop");
+ confetti();if(navigator.vibrate)$("call").addEventListener("click",()=>navigator.vibrate(60))}
+
+document.querySelectorAll("#lang .btn").forEach(b=>b.onclick=()=>{L=b.dataset.l;ls("lang",L);document.documentElement.lang=L;$("lang").classList.add("off");startSound();intro(0)});
+const saved=ls("lang");if(saved&&T[saved]){L=saved;$("lang").classList.add("off");intro(0);
+ document.body.addEventListener("pointerdown",function s(){startSound();document.body.removeEventListener("pointerdown",s)})}
+</script></body></html>
